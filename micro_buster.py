@@ -151,7 +151,8 @@ def send_instant_email_alert(alert_type: str, alert_message: str):
                 send_instant_email_alert("MICRO_LOSS_SPIKE", alert_msg)
 
 # =====================================================================# THE VISUAL USER INTERFACE (STREAMLIT FRAMEWORK)# =====================================================================
-st.set_page_config(page_title="MicroLoss Buster Dashboard", page_icon="🛡️", layout="wide")engine = AIAntiFraudInventorySystem()
+st.set_page_config(page_title="MicroLoss Buster Dashboard", page_icon="🛡️", layout="wide")
+engine = AIAntiFraudInventorySystem()
 
 st.title("🛡️ MicroLoss Buster: Enterprise Owner Interface")
 st.markdown("---")

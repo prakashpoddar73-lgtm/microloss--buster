@@ -197,8 +197,8 @@ with col_left:
         if st.button("Commit Product to System Matrix"):
             if new_item:
                st.session_state.inventory[new_item] = new_stock
-        if "prices" not in st.session_state:
-            st.session_state.prices = {}
+               if "prices" not in st.session_state:
+                   st.session_state.prices = {}
                 st.session_state.prices[new_item] = new_price
                 st.success(f"Successfully added '{new_item}' to system!")
                 st.rerun()

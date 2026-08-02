@@ -11,6 +11,22 @@ class AIAntiFraudInventorySystem:
 
 def process_transaction(self, emp, action, item, qty, cash):
     return True
+# Initialize session state variables so they don't cause errors on load
+if "is_premium_tier" not in st.session_state:
+    st.session_state.is_premium_tier = False
+
+if "employee_registry" not in st.session_state:
+    st.session_state.employee_registry = {}
+
+if "inventory" not in st.session_state:
+    st.session_state.inventory = {}
+
+if "security_alerts" not in st.session_state:
+    st.session_state.security_alerts = []
+
+if "transaction_logs" not in st.session_state:
+    st.session_state.transaction_logs = []    
+  
 # Configure secure file logging
 logging.basicConfig(
     level=logging.INFO,

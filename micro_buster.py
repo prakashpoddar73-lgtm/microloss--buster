@@ -196,9 +196,9 @@ with col_left:
         new_price = st.number_input("Target Unit Price ($)", min_value=0.1, value=4.50)
         if st.button("Commit Product to System Matrix"):
             if new_item:
-               st.session_state.inventory[new_item] = new_stock
-               if "prices" not in st.session_state:
-                   st.session_state.prices = {}
+                st.session_state.inventory[new_item] = new_stock
+                if "prices" not in st.session_state:
+                    st.session_state.prices = {}
                 st.session_state.prices[new_item] = new_price
                 st.success(f"Successfully added '{new_item}' to system!")
                 st.rerun()

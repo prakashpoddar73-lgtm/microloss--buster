@@ -5,6 +5,7 @@ import smtplib
 from email.mime.text import MIMEText
 import uuid
 import streamlit as st
+st.set_page_config(layout="wide")
 class AIAntiFraudInventorySystem:
     def __init__(self):
         pass

@@ -234,7 +234,7 @@ with col_right:
     metric_col2.metric("🚨 Active AI System Flags", len(st.session_state.security_alerts))
     metric_col3.metric("📦 Active Catalog Types", len(st.session_state.inventory))
     st.subheader("🚨 Live Anti-Theft Incident Log")
-        def show_dashboard():
+def show_dashboard():
             if not st.session_state.security_alerts:
                 st.write("✅ System status secure. No behavioral anomalies recorded.")
             else:

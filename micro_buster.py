@@ -234,24 +234,33 @@ with col_right:
     metric_col2.metric("🚨 Active AI System Flags", len(st.session_state.security_alerts))
     metric_col3.metric("📦 Active Catalog Types", len(st.session_state.inventory))
     st.subheader("🚨 Live Anti-Theft Incident Log")
-    def show_dashboard():
-        if not st.session_state.security_alerts:
-            st.write("✅ System status secure. No behavioral anomalies recorded.")
-        else:
-            for alert in reversed(st.session_state.security_alerts):
-                st.error(f"[{alert['time']}] [{alert['type']}] -> {alert['msg']}")
-    
-    st.subheader("📦 Live Warehouse Stock Balances")
-    for prod, qty in st.session_state.inventory.items():
-        st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices[prod]:.2f}/ea)")
-    
-    st.subheader("👥 Active Staff Access Profiles")
-    for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
-        status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
-        st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
+        def show_dashboard():
+            if not st.session_state.security_alerts:
+                st.write("✅ System status secure. No behavioral anomalies recorded.")
+            else:
+                for alert in reversed(st.session_state.security_alerts):
+                    st.error(f"[{alert['time']}] [{alert['type']}] -> {alert['msg']}")
+        
+        st.subheader("📦 Live Warehouse Stock Balances")
+        for prod, qty in st.session_state.inventory.items():
+            st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices[prod]:.2f}/ea)")
+        
+        st.subheader("👥 Active Staff Access Profiles")
+        for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
+            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
+            st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
+def show_traffic_simulation():
+    st.title("🛰️ Live Shop Traffic and Telemetry")
+    st.write("Traffic simulation engine active.")
 
+def show_management():
+    st.title("⚙️ System Management and Forms")
+    st.write("Administrative configurations.")
 dashboard_page = st.Page(show_dashboard, title="Main Dashboard", icon="📊")
-pg = st.navigation([dashboard_page])
+telemetry_page = st.Page(show_traffic_simulation, title="Shop Traffic", icon="🛰️")
+management_page = st.Page(show_management, title="System Control", icon="⚙️")
+
+pg = st.navigation([dashboard_page, telemetry_page, management_page])
 pg.run()
 
 

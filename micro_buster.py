@@ -6,6 +6,22 @@ from email.mime.text import MIMEText
 import uuid
 import streamlit as st
 st.set_page_config(layout="wide")
+st.markdown("""
+    <style>
+    .stApp {
+        background-colour: #0B0F19;
+        color: #E2E8FO;
+     }
+     [data-testid="stSidebar"]  {
+         background-color: #05070B;
+         border-right: 1px solid #1E293B;
+      }
+      .stExpander, div[data-testid="stMetricValue"] {
+          background-color: #111827;
+          border-radius: 8px;
+       }
+       </style>
+   """, unsafe_allow_html=True)
 class AIAntiFraudInventorySystem:
     def __init__(self):
         pass

@@ -226,6 +226,7 @@ if st.button("Execute Counter Action"):
             if success:
                     st.success("Action evaluated and logged.")
                     st.rerun()
+def show_dashboard():
 with col_right:
     st.header("📊 Real-Time Operations Telemetry")
     revenue_calc = sum([log["cash"] for log in st.session_state.transaction_logs if log["type"] == "sale"])
@@ -234,7 +235,7 @@ with col_right:
     metric_col2.metric("🚨 Active AI System Flags", len(st.session_state.security_alerts))
     metric_col3.metric("📦 Active Catalog Types", len(st.session_state.inventory))
     st.subheader("🚨 Live Anti-Theft Incident Log")
-def show_dashboard():
+
             if not st.session_state.security_alerts:
                 st.write("✅ System status secure. No behavioral anomalies recorded.")
             else:

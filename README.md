@@ -210,11 +210,11 @@ with col_right:
 	metric_col3.metric("📦 Active Catalog Types", len(st.session_state.inventory))
 	st.subheader("🚨 Live Anti-Theft Incident Log")
     if not st.session_state.security_alerts:
-            st.write("✅ System status secure. No behavioral anomalies recorded.")
+            	st.write("✅ System status secure. No behavioral anomalies recorded.")
     else:
 	    
-         for alert in reversed(st.session_state.security_alerts):
-	     st.error(f"[{alert['time']}] [{alert['type']}] -> {alert['msg']}")
+        	 for alert in reversed(st.session_state.security_alerts):
+	     		st.error(f"[{alert['time']}] [{alert['type']}] -> {alert['msg']}")
 		
      st.subheader("📦 Live Warehouse Stock Balances")
      for prod, qty in st.session_state.inventory.items():

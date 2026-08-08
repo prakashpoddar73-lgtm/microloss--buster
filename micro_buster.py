@@ -264,8 +264,8 @@ def show_dashboard():
                     
                         st.subheader("👥 Active Staff Access Profiles")
                         for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
-                        status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
-                        st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
+                            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
+                            st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
 def show_traffic_simulation():
     st.title("🛰️ Live Shop Traffic and Telemetry")
     st.write("Traffic simulation engine active.")

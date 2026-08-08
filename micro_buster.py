@@ -362,18 +362,6 @@ with tab_management:
                 }
                 st.success(f"Access granted for {new_emp_name}!")
                 st.rerun()
-def show_traffic_simulation():
-    st.title("🛰️ Live Shop Traffic and Telemetry")
-    st.write("Traffic simulation engine active.")
 
-def show_management():
-    st.title("⚙️ System Management and Forms")
-    st.write("Administrative configurations.")
-dashboard_page = st.Page(show_dashboard, title="Main Dashboard", icon="📊")
-telemetry_page = st.Page(show_traffic_simulation, title="Shop Traffic", icon="🛰️")
-management_page = st.Page(show_management, title="System Control", icon="⚙️")
-
-pg = st.navigation([dashboard_page, telemetry_page, management_page])
-pg.run()
 
 

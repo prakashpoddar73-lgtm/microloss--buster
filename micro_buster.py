@@ -253,7 +253,7 @@ def show_dashboard():
             st.subheader("🚨 Live Anti-Theft Incident Log")
         
             if not st.session_state.security_alerts:
-            st.write("✅ System status secure. No behavioral anomalies recorded.")
+                st.write("✅ System status secure. No behavioral anomalies recorded.")
             else:
             for alert in reversed(st.session_state.security_alerts):
             st.error(f"[{alert['time']}] [{alert['type']}] -> {alert['msg']}")

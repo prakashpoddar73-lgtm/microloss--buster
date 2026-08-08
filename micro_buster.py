@@ -260,12 +260,12 @@ def show_dashboard():
             
                     st.subheader("📦 Live Warehouse Stock Balances")
                     for prod, qty in st.session_state.inventory.items():
-                    st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices[prod]:.2f}/ea)")
+                        st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices[prod]:.2f}/ea)")
                     
-                    st.subheader("👥 Active Staff Access Profiles")
-                    for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
-                    status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
-                    st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
+                        st.subheader("👥 Active Staff Access Profiles")
+                        for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
+                        status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
+                        st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
 def show_traffic_simulation():
     st.title("🛰️ Live Shop Traffic and Telemetry")
     st.write("Traffic simulation engine active.")

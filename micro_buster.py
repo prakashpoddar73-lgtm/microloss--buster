@@ -236,12 +236,12 @@ with col_left:
         sim_item = st.selectbox("Target Product", list(st.session_state.inventory.keys()))
         sim_qty = st.number_input("Quantity Traded", min_value=1, value=1)
         sim_cash = st.number_input("Actual Cash Taken ($)", min_value=0.0, value=0.0)
-        
-if st.button("Execute Counter Action"):
-            success = engine.process_transaction(sim_emp, sim_action, sim_item, sim_qty, sim_cash)
-            if success:
-                    st.success("Action evaluated and logged.")
-                    st.rerun()
+            
+            if st.button("Execute Counter Action"):
+                    success = engine.process_transaction(sim_emp, sim_action, sim_item, sim_qty, sim_cash)
+                    if success:
+                            st.success("Action evaluated and logged.")
+                            st.rerun()
 def show_dashboard():
         with col_right:
             st.header("📊 Real-Time Operations Telemetry")
@@ -260,12 +260,108 @@ def show_dashboard():
             
                     st.subheader("📦 Live Warehouse Stock Balances")
                     for prod, qty in st.session_state.inventory.items():
-                        st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices[prod]:.2f}/ea)")
+                        st.progress(min(max(qty / 200.0, 0.0), 1.0), text=f"{prod}: {qty} units remaining (${st.session_state.prices.get(prod, 0.0):.2f}/ea)")
                     
                         st.subheader("👥 Active Staff Access Profiles")
                         for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
-                            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear"
-                            st.text(f"[{eid}] Name: {data['name'].ljust(15)} | Role: {data['role'].ljust(12)} | Profile: {status_txt}")
+                            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear 
+tab_dashboard, tab_simulation, tab_management = st.tabs([
+    "📊 Main Operations Dashboard", 
+    "🛒 Live Simulation Terminal", 
+    "⚙️ System Control & Settings"
+])
+
+with tab_dashboard:
+    show_dashboard()
+
+with tab_simulation:
+    st.title("🛒 Live Shop Traffic and Telemetry")
+    st.write("Traffic simulation engine active.")
+    
+with st.expander("🛒 Simulate Live Shop Traffic", expanded=True):
+        if not st.session_state.employee_registry:
+            st.warning("⚠️ Simulation requires at least one registered staff member profile.")
+        elif not st.session_state.inventory:
+            st.warning("⚠️ Warehouse Catalog Matrix Empty. Please input configuration data.")
+        else:
+            sim_emp = st.selectbox("Select Active Staff Member", list(st.session_state.employee_registry.keys()))
+            sim_action = st.selectbox("Action Execution Type", ["sale", "micro_loss", "cart_deletion"])
+            sim_item = st.selectbox("Target Product", list(st.session_state.inventory.keys()))
+            
+            if "units" not in st.session_state:
+                st.session_state.units = {}
+            unit_label = st.session_state.units.get(sim_item, "units")
+            
+            col_q, col_c = st.columns(2)
+            with col_q:
+                sim_qty = st.number_input(f"Quantity Traded ({unit_label})", min_value=1.0, value=1.0, step=1.0)
+            with col_c:
+                sim_cash = st.number_input("Actual Cash Taken ($)", min_value=0.0, value=0.0, step=0.5)
+            
+            if st.button("Execute Counter Action"):
+                success = engine.process_transaction(sim_emp, sim_action, sim_item, sim_qty, sim_cash)
+                if success:
+                    st.success("Action evaluated and logged.")
+                    st.rerun()
+
+with tab_management:
+    st.title("⚙️ System Management and Forms")
+    st.write("Administrative configurations.")
+    
+    if "is_premium_tier" not in st.session_state:
+        st.session_state.is_premium_tier = False
+        
+    if not st.session_state.is_premium_tier:
+        st.info("Currently running Free Tier (AI deactivated)")
+        if st.button("Unlock Premium AI Engine ($2/yr)"):
+            st.session_state.is_premium_tier = True
+            st.success("Premium AI Engine activated successfully!")
+            st.rerun()
+    else:
+        st.success("✨ Premium AI Engine Status: Active")
+        
+    st.markdown("---")
+    
+    with st.expander("📦 Add New Catalog Products", expanded=True):
+        new_item = st.text_input("Product Name", placeholder="e.g., Denim Fabric")
+        
+        col_p, col_u = st.columns(2)
+        with col_p:
+            new_price = st.number_input("Target Unit Price ($)", min_value=0.01, value=10.0, step=0.5)
+        with col_u:
+            new_unit = st.selectbox(
+                "Measurement Dimension Unit", 
+                ["meters (m)", "tons (t)", "liters (L)", "pieces (pcs)", "kilograms (kg)", "yards (yd)"]
+            )
+            
+        new_stock = st.number_input(f"Starting Warehouse Stock ({new_unit})", min_value=1.0, value=100.0, step=1.0)
+        
+        if st.button("Commit Product to System Matrix"):
+            if new_item:
+                st.session_state.inventory[new_item] = new_stock
+                st.session_state.prices[new_item] = new_price
+                if "units" not in st.session_state:
+                    st.session_state.units = {}
+                st.session_state.units[new_item] = new_unit
+                st.success(f"Added '{new_item}' tracked in '{new_unit}'!")
+                st.rerun()
+
+    st.markdown("---")
+    
+    with st.expander("👤 Register Store Personnel", expanded=False):
+        new_emp_id = st.text_input("New Employee Access ID Token", placeholder="e.g., EMP_01")
+        new_emp_name = st.text_input("Full Legal Name")
+        new_emp_role = st.selectbox("Designation Role", ["Cashier", "Store Manager"])
+        
+        if st.button("Authorize Employee Profile"):
+            if new_emp_id and new_emp_name:
+                st.session_state.employee_registry[new_emp_id] = {
+                    "name": new_emp_name,
+                    "role": new_emp_role,
+                    "is_flagged": False
+                }
+                st.success(f"Access granted for {new_emp_name}!")
+                st.rerun()
 def show_traffic_simulation():
     st.title("🛰️ Live Shop Traffic and Telemetry")
     st.write("Traffic simulation engine active.")

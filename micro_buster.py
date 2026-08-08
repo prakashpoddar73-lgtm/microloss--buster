@@ -237,13 +237,9 @@ with col_left:
         sim_qty = st.number_input("Quantity Traded", min_value=1, value=1)
         sim_cash = st.number_input("Actual Cash Taken ($)", min_value=0.0, value=0.0)
             
-            if st.button("Execute Counter Action"):
-                    success = engine.process_transaction(sim_emp, sim_action, sim_item, sim_qty, sim_cash)
-                    if success:
-                            st.success("Action evaluated and logged.")
-                            st.rerun()
+           
 def show_dashboard():
-        with col_right:
+            with col_right:
             st.header("📊 Real-Time Operations Telemetry")
             revenue_calc = sum([log["cash"] for log in st.session_state.transaction_logs if log["type"] == "sale"])
             metric_col1, metric_col2, metric_col3 = st.columns(3)

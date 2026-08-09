@@ -336,7 +336,7 @@ with tab_management:
             
         new_stock = st.number_input(f"Starting Warehouse Stock ({new_unit})", min_value=1.0, value=100.0, step=1.0)
         
-        if st.button("Commit Product to System Matrix"):
+        if st.button("Commit Product to System Matrix", key="commit_product_matrix_unique_key"):
             if new_item:
                 st.session_state.inventory[new_item] = new_stock
                 st.session_state.prices[new_item] = new_price

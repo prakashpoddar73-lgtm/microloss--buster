@@ -260,7 +260,7 @@ def show_dashboard():
                     
                         st.subheader("👥 Active Staff Access Profiles")
                         for idx, (eid, data) in enumerate(st.session_state.employee_registry.items()):
-                            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear 
+                            status_txt = "⚠️ HIGH RISK ASSIGNED" if data["is_flagged"] else "✅ Nominal / Clear" 
 tab_dashboard, tab_simulation, tab_management = st.tabs([
     "📊 Main Operations Dashboard", 
     "🛒 Live Simulation Terminal", 

@@ -350,7 +350,7 @@ with tab_management:
     
     with st.expander("👤 Register Store Personnel", expanded=False):
         new_emp_id = st.text_input("New Employee Access ID Token", placeholder="e.g., EMP_01")
-        new_emp_name = st.text_input("Full Legal Name")
+        new_emp_name = st.text_input("Full Legal Name", key="new_emp_name_unique_input")
         new_emp_role = st.selectbox("Designation Role", ["Cashier", "Store Manager"])
         
         if st.button("Authorize Employee Profile"):

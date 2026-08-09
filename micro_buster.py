@@ -9,8 +9,12 @@ st.set_page_config(layout="wide")
 st.markdown("""
     <style>
     .stApp {
-        background-colour: #0B0F19;
+        background-color: #0B0F19;
         color: #E2E8FO;
+     }
+     /* Forces all text labels and headings to be readable white */
+     h1, h2, h3, p, span, label, [data-testid="stWidgetLabel"] p {
+         color: #FFFFFF !important;
      }
      [data-testid="stSidebar"]  {
          background-color: #05070B;
@@ -309,7 +313,7 @@ with tab_management:
         
     if not st.session_state.is_premium_tier:
         st.info("Currently running Free Tier (AI deactivated)")
-        if st.button("Unlock Premium AI Engine ($2/yr)"):
+        if st.button("Unlock Premium AI Engine ($2/yr)", key="premium_engine_button_unique"):
             st.session_state.is_premium_tier = True
             st.success("Premium AI Engine activated successfully!")
             st.rerun()
